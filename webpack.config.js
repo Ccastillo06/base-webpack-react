@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 function NothingPlugin() {
@@ -14,7 +15,7 @@ const config = env => ({
   entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].bundle.js',
   },
   devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
   module: {
@@ -100,8 +101,12 @@ const config = env => ({
     }),
     env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin(),
     env && env.NODE_ENV === 'production'
-      ? new MiniCssExtractPlugin({ chunkFilename: '[id].css', filename: '[name].css' })
+      ? new MiniCssExtractPlugin({
+          chunkFilename: '[id].css',
+          filename: '[name].[contenthash].css',
+        })
       : new NothingPlugin(),
+    new CleanWebpackPlugin(['dist']),
   ],
   devServer: {
     contentBase: './dist',
