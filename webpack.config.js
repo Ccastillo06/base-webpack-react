@@ -2,6 +2,8 @@ const webpack = require('webpack'); // eslint-disable-line no-unused-vars
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 function NothingPlugin() {
@@ -14,6 +16,7 @@ const config = env => ({
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
   module: {
     rules: [
       {
@@ -72,6 +75,16 @@ const config = env => ({
           'sass-loader',
         ],
       },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
     ],
   },
   resolve: {
