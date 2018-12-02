@@ -5,6 +5,7 @@
   },
   "extends": ["airbnb", "plugin:prettier/recommended"],
   "rules": {
-    "strict": 0
+    "strict": 0,
+    "react/jsx-one-expression-per-line": 0
   }
 }
