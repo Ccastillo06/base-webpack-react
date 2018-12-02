@@ -1,45 +1,49 @@
-const webpack = require('webpack');
+const webpack = require('webpack'); // eslint-disable-line no-unused-vars
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 function NothingPlugin() {
-    this.apply = function(){};
+  this.apply = () => {};
 }
 
-const config = (env) => ({
-    entry: './src/index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                use: 'babel-loader',
-                exclude: /node_modules/
-            }
-        ]
-    },
-    resolve: {
-        extensions: [
-            '.js',
-            '.jsx',
-            '.mjs' // For Apollo library
-        ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: 'public/index.html'
-        }),
-        env && env.analyze
-            ? new BundleAnalyzerPlugin()
-            : new NothingPlugin(),
+const config = env => ({
+  entry: './src/index.jsx',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
     ],
-    devServer: {
-        contentBase: './dist'
-    }
+  },
+  resolve: {
+    extensions: [
+      '.js',
+      '.jsx',
+      '.mjs', // For Apollo library
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+    }),
+    env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin(),
+  ],
+  devServer: {
+    contentBase: './dist',
+  },
 });
 
 module.exports = config;
