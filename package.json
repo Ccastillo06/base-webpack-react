@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --hot --open --mode development",
     "build-dev": "webpack -d --mode development",
     "clean": "rm -rf dist",
-    "build-prod": "npm run clean && webpack -p --mode production --env.NODE_ENV=production",
+    "build-prod": "npm run clean && NODE_ENV=production webpack -p --mode production --env.NODE_ENV=production",
     "analyze": "npm run build-prod -- --env.analyze",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -60,5 +60,11 @@
     "last 1 version",
     "not dead",
     "> 1% in US"
+  ],
+  "sideEffects": [
+    "@babel/polyfill",
+    "*.css",
+    "*.scss",
+    "*.sass"
   ]
 }
