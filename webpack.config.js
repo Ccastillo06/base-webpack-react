@@ -1,5 +1,6 @@
 const webpack = require('webpack'); // eslint-disable-line no-unused-vars
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -112,6 +113,7 @@ const config = env => ({
     ],
   },
   plugins: [
+    new Dotenv(),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
