@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm dist/bundle.js",
-    "start": "webpack-dev-server --hot --mode development",
+    "clean": "rm -rf dist",
+    "start": "webpack-dev-server --hot --open --mode development",
     "build-dev": "webpack -d --mode development",
-    "build-prod": "webpack -p --mode production",
+    "build-prod": "npm run clean && webpack -p --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,6 +18,7 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"

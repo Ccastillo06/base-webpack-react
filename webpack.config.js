@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   entry: './src/index.js',
@@ -19,9 +20,15 @@ const config = {
   resolve: {
     extensions: [
       '.js',
-      '.jsx'
+      '.jsx',
+      '.mjs' // For Apollo library
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'public/index.html'
+    })
+  ],
   devServer: {
     contentBase: './dist'
   }
