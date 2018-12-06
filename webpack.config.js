@@ -17,20 +17,32 @@ const config = env => ({
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].bundle.js',
+    libraryTarget: 'umd',
   },
-  devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loader: 'awesome-typescript-loader',
+      },
+      {
+        enforce: 'pre',
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        loader: 'tslint-loader',
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -84,7 +96,7 @@ const config = env => ({
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true,
+        sourceMap: env && env.NODE_ENV !== 'production',
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
@@ -107,6 +119,8 @@ const config = env => ({
   },
   resolve: {
     extensions: [
+      '.ts',
+      '.tsx',
       '.js',
       '.jsx',
       '.mjs', // For Apollo library
@@ -120,7 +134,7 @@ const config = env => ({
     env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin(),
     env && env.NODE_ENV === 'production'
       ? new MiniCssExtractPlugin({
-          chunkFilename: '[id].css',
+          chunkFilename: '[name].[id].css',
           filename: '[name].[contenthash].css',
         })
       : new NothingPlugin(),
@@ -128,6 +142,10 @@ const config = env => ({
   ],
   devServer: {
     contentBase: './dist',
+  },
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
   },
 });
 
