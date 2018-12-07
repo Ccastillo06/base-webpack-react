@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
+    // allowSyntheticDefaultImports and esModuleInterop are needed to support 
+    // default imports and exports with TypeScript.
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
