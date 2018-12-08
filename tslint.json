@@ -3,7 +3,8 @@
   "extends": ["tslint:latest", "tslint-react"],
   "jsRules": {},
   "rules": {
-    "quotemark": [true, "single", "jsx-double"]
+    "quotemark": [true, "single", "jsx-double"],
+    "no-implicit-dependencies": [true, "dev"] // This is needed to import from devDependencies.
   },
   "rulesDirectory": []
 }

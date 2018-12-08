@@ -13,11 +13,12 @@ module.exports = api => {
   ];
 
   const plugins = [
+    '@babel/plugin-transform-modules-commonjs',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
   ];
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
     plugins.push('react-hot-loader/babel');
   }
 
