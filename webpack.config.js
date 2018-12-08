@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 function NothingPlugin() {
@@ -139,6 +140,7 @@ const config = env => ({
         })
       : new NothingPlugin(),
     new CleanWebpackPlugin(['dist']),
+    new WebpackNotifierPlugin(),
   ],
   devServer: {
     contentBase: './dist',

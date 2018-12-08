@@ -68,7 +68,8 @@
     "webpack": "^4.26.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "webpack-notifier": "^1.7.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
